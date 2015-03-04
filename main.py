@@ -1,15 +1,18 @@
 import re
 import sys
 from   subprocess import call
+from os import mkdir
  
 # Name of the tumblr.
 username = sys.argv[1]
  
 # Download all the pages into a directory called Pages.
-call(["mkdir", "Pages"])
+#call(["mkdir", "Pages"])
+mkdir("Pages")
 next_page   = 1
 page_exists = True
 while page_exists:
+    #Figure out a way to replace this with urllib
     call(["wget", "http://"+username+".tumblr.com/page/"+str(next_page),\
           "-O", "Pages/page"+str(next_page)+".html"])
     page_exists = False
@@ -57,7 +60,7 @@ for page in range(total_pages):
     f.close()
  
 # Download each post identified.
-call(["mkdir", "Posts"])
+mkdir("Pages")
 for p in posts:
     call(["wget", "http://"+username+".tumblr.com/post/"+p+"/",\
           "-O", "Posts/"+p])
