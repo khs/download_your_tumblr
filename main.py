@@ -1,6 +1,6 @@
 import re
 import sys
-from   subprocess import call
+from urllib.request import urlopen
 from os import mkdir
  
 # Name of the tumblr.
@@ -13,8 +13,11 @@ next_page   = 1
 page_exists = True
 while page_exists:
     #Figure out a way to replace this with urllib
-    call(["wget", "http://"+username+".tumblr.com/page/"+str(next_page),\
-          "-O", "Pages/page"+str(next_page)+".html"])
+    u = urlopen("http://"+username+".tumblr.com/page/"+str(next_page))
+    with open("Pages/page"+str(next_page)+".html","wb") as f:
+        f.write(u.readall())
+    #call(["wget", "http://"+username+".tumblr.com/page/"+str(next_page),\
+    #      "-O", "Pages/page"+str(next_page)+".html"])
     page_exists = False
     # Read through current page looking for link to next page,
     # to see if it exists.
@@ -60,7 +63,8 @@ for page in range(total_pages):
     f.close()
  
 # Download each post identified.
-mkdir("Pages")
+mkdir("Posts")
 for p in posts:
-    call(["wget", "http://"+username+".tumblr.com/post/"+p+"/",\
-          "-O", "Posts/"+p])
+    u = urlopen("http://"+username+".tumblr.com/post/"+p)
+    with open("Posts/"+p+".html","wb") as f:
+        f.write(u.readall())
