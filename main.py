@@ -67,4 +67,4 @@ mkdir("Posts")
 for p in posts:
     u = urlopen("http://"+username+".tumblr.com/post/"+p)
     with open("Posts/"+p+".html","wb") as f:
-        f.write(u.readall())
+        f.write(u.read())
