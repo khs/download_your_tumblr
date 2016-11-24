@@ -15,7 +15,7 @@ while page_exists:
     #Figure out a way to replace this with urllib
     u = urlopen("http://"+username+".tumblr.com/page/"+str(next_page))
     with open("Pages/page"+str(next_page)+".html","wb") as f:
-        f.write(u.readall())
+        f.write(u.read())
     #call(["wget", "http://"+username+".tumblr.com/page/"+str(next_page),\
     #      "-O", "Pages/page"+str(next_page)+".html"])
     page_exists = False
